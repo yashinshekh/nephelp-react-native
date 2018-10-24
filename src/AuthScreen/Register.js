@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import {Text,View} from 'react-native';
 import {Body, Button, Card, CardItem, Container, Content, Header, Icon, Left, Right, Title} from "native-base";
 import TextField from "react-native-material-textfield/src/components/field";
-import {registerUser} from "../actions/authAction";
+import {logout, registerUser,checkLocalToken} from "../actions/authAction";
 import {connect} from 'react-redux';
 
 class Register extends Component{
@@ -12,6 +12,17 @@ class Register extends Component{
         password2:'',
         errors:{}
     };
+
+    componentDidMount = () => {
+        this.props.checkLocalToken();
+    };
+
+    static getDerivedStateFromProps(nextProps,previosProps){
+        if(nextProps.auth.isAuthenticated){
+            nextProps.navigation.navigate('Home')
+        }
+        return null;
+    }
 
     onSubmit = () => {
         this.props.registerUser(this.state)
@@ -74,7 +85,8 @@ Register.navigationOptions = ({ navigation }) => {
 };
 
 const mapStateToProps = (state) => ({
-    errors:state.errors
+    errors:state.errors,
+    auth:state.auth
 });
 
-export default connect(mapStateToProps,{registerUser})(Register);
+export default connect(mapStateToProps,{checkLocalToken,registerUser,logout})(Register);

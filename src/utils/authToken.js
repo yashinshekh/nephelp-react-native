@@ -11,9 +11,9 @@ export const getToken = () => new Promise((resolve,reject) => {
     }).done();
 });
 
-export const removeToken = () => {
-    AsyncStorage.removeItem("token");
-};
+export const removeToken = () =>new Promise((resolve,reject) => {
+    AsyncStorage.removeItem("token").then(data => resolve(data)).done();
+});
 
 export const setAuthToken = (token) => {
     if(token){

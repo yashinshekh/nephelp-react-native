@@ -11,7 +11,8 @@ const HomeScreenRouter = createDrawerNavigator(
       Home: { screen: HomeScreen },
       ProfileScreen: { screen: ProfileScreen },
       LoginScreen:{screen:AuthScreen},
-      RegisterScreen:{screen:AuthScreen}
+      RegisterScreen:{screen:AuthScreen},
+      LogoutScreen:{screen:AuthScreen}
   },
   {
     contentComponent: props => <SideBar {...props} />

@@ -3,7 +3,7 @@ import {Text,View,TextInput,StyleSheet} from 'react-native';
 import {Body, Button, Card, CardItem, Container, Content, Header, Icon, Left, Right, Title} from "native-base";
 import {TextField} from 'react-native-material-textfield';
 import {connect} from 'react-redux';
-import {loginUser} from "../actions/authAction";
+import {loginUser, checkLocalToken, logout} from "../actions/authAction";
 
 class Login extends Component{
     state = {
@@ -11,6 +11,17 @@ class Login extends Component{
         password:'',
         errors:{}
     };
+
+    componentDidMount = () => {
+        this.props.checkLocalToken();
+    };
+
+    static getDerivedStateFromProps(nextProps,previosProps){
+        if(nextProps.auth.isAuthenticated){
+            nextProps.navigation.navigate('Home')
+        }
+        return null;
+    }
 
     onSubmit = () => {
         this.props.loginUser(this.state);
@@ -74,7 +85,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
-    errors:state.errors
+    errors:state.errors,
+    auth:state.auth
 });
 
-export default connect(mapStateToProps,{loginUser})(Login);
+export default connect(mapStateToProps,{loginUser,checkLocalToken,logout})(Login);

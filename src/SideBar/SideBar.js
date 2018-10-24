@@ -9,9 +9,35 @@ import {
   Content,
   Icon
 } from "native-base";
-const routes = ["Home", "Profile","Login","Register"];
-export default class SideBar extends React.Component {
+import {connect} from 'react-redux';
+import {checkLocalToken} from "../actions/authAction";
+
+
+class SideBar extends React.Component {
+
+    state ={
+        isAuthenticated:false
+    };
+
+    componentDidMount = () => {
+        this.props.checkLocalToken();
+    };
+
+    static getDerivedStateFromProps(nextProps,previosProps){
+        return{
+            isAuthenticated: nextProps.auth.isAuthenticated
+        }
+    }
+
   render() {
+      let routes;
+
+      if(this.state.isAuthenticated){
+          routes = ["Home","Profile","Logout"]
+      } else {
+          routes = ["Home","Profile","Login","Register"];
+      }
+
     return (
       <Container>
         <Content>
@@ -60,3 +86,9 @@ export default class SideBar extends React.Component {
     );
   }
 }
+
+const mapDispatchToProps = (state) => ({
+    auth:state.auth
+});
+
+export default connect(mapDispatchToProps,{checkLocalToken})(SideBar)
