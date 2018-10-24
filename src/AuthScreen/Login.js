@@ -2,6 +2,8 @@ import React,{Component} from 'react';
 import {Text,View,TextInput,StyleSheet} from 'react-native';
 import {Body, Button, Card, CardItem, Container, Content, Header, Icon, Left, Right, Title} from "native-base";
 import {TextField} from 'react-native-material-textfield';
+import {connect} from 'react-redux';
+import {loginUser} from "../actions/authAction";
 
 class Login extends Component{
     state = {
@@ -11,7 +13,7 @@ class Login extends Component{
     };
 
     onSubmit = () => {
-        console.log(this.state);
+        this.props.loginUser(this.state);
     };
 
     render() {
@@ -22,13 +24,13 @@ class Login extends Component{
                         label='Email'
                         value={this.state.email}
                         onChangeText={ (email) => this.setState({ email }) }
-                        error={this.state.errors.email}
+                        error={this.props.errors.email}
                     />
                     <TextField
                         label='Password'
                         value={this.state.password}
                         onChangeText={ (password) => this.setState({ password }) }
-                        error={this.state.errors.password}
+                        error={this.props.errors.password}
                     />
 
                     <Button
@@ -69,6 +71,10 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         marginRight: 5
     }
-})
+});
 
-export default Login;
+const mapStateToProps = (state) => ({
+    errors:state.errors
+});
+
+export default connect(mapStateToProps,{loginUser})(Login);

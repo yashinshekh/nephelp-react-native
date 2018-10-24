@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux';
-import Test from './test';
+import Error from './errorReducer';
+import Auth from './authReducer';
 
 const reducers = combineReducers({
-    test:Test
+    errors:Error,
+    auth:Auth
 });
 
 export default reducers;

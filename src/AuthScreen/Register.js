@@ -1,8 +1,9 @@
 import React,{Component} from 'react';
 import {Text,View} from 'react-native';
 import {Body, Button, Card, CardItem, Container, Content, Header, Icon, Left, Right, Title} from "native-base";
-import Profile from "../ProfileScreen/Profile";
 import TextField from "react-native-material-textfield/src/components/field";
+import {registerUser} from "../actions/authAction";
+import {connect} from 'react-redux';
 
 class Register extends Component{
     state = {
@@ -13,7 +14,7 @@ class Register extends Component{
     };
 
     onSubmit = () => {
-        console.log(this.state);
+        this.props.registerUser(this.state)
     };
 
     render() {
@@ -72,4 +73,8 @@ Register.navigationOptions = ({ navigation }) => {
     };
 };
 
-export default Register;
+const mapStateToProps = (state) => ({
+    errors:state.errors
+});
+
+export default connect(mapStateToProps,{registerUser})(Register);
