@@ -1,7 +1,23 @@
 import React, { Component } from "react";
 import Expo from "expo";
 import HomeScreen from "./src/HomeScreen/index.js";
-export default class AwesomeApp extends Component {
+import {createStore,compose,applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
+import {Provider} from 'react-redux';
+import reducers from './src/reducer/index';
+
+const initalState = {};
+const middleware = [thunk];
+const store = createStore(
+    reducers,
+    initalState,
+    compose(
+        applyMiddleware(...middleware)
+    )
+);
+
+
+class AwesomeApp extends Component {
     constructor() {
         super();
         this.state = {
@@ -20,6 +36,12 @@ export default class AwesomeApp extends Component {
         if (!this.state.isReady) {
             return <Expo.AppLoading />;
         }
-        return <HomeScreen />;
+        return(
+            <Provider store={store}>
+                <HomeScreen />
+            </Provider>
+        )
     }
 }
+
+export default AwesomeApp;

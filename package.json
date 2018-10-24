@@ -21,6 +21,8 @@
     "react-native-router-flux": "^4.0.5",
     "react-navigation": "^2.18.0",
     "react-redux": "^5.0.7",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
     "tinycolor2": "^1.4.1"
   }
 }
