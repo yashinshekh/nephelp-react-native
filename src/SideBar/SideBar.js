@@ -35,7 +35,7 @@ class SideBar extends React.Component {
       if(this.state.isAuthenticated){
           routes = ["Home","Profile","Logout"]
       } else {
-          routes = ["Home","Profile","Login","Register"];
+          routes = ["Login","Register"];
       }
 
     return (
