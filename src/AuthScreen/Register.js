@@ -2,15 +2,52 @@ import React,{Component} from 'react';
 import {Text,View} from 'react-native';
 import {Body, Button, Card, CardItem, Container, Content, Header, Icon, Left, Right, Title} from "native-base";
 import Profile from "../ProfileScreen/Profile";
+import TextField from "react-native-material-textfield/src/components/field";
 
 class Register extends Component{
+    state = {
+        email:'',
+        password:'',
+        password2:'',
+        errors:{}
+    };
+
+    onSubmit = () => {
+        console.log(this.state);
+    };
+
     render() {
         return (
-            <Container>
+            <Container >
                 <Content padder>
-                    <Text>
-                        You are in register page.
-                    </Text>
+                    <TextField
+                        label='Email'
+                        value={this.state.email}
+                        onChangeText={ (email) => this.setState({ email }) }
+                        error={this.state.errors.email}
+                    />
+                    <TextField
+                        label='Password'
+                        value={this.state.password}
+                        onChangeText={ (password) => this.setState({ password }) }
+                        error={this.state.errors.password}
+                    />
+
+                    <TextField
+                        label='Confirm Password'
+                        value={this.state.password2}
+                        onChangeText={ (password2) => this.setState({ password2 }) }
+                        error={this.state.errors.password2}
+                    />
+
+                    <Button
+                        full
+                        rounded
+                        style={{ marginTop: 10 }}
+                        onPress={() => this.onSubmit()}>
+                        <Text>Register</Text>
+                    </Button>
+
                 </Content>
             </Container>
         );
