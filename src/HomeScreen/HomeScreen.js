@@ -14,8 +14,35 @@ import {
   Icon,
   Right
 } from "native-base";
+import {TextField} from 'react-native-material-textfield';
+import {connect} from 'react-redux';
+import {sendEmail} from "../actions/authAction";
+import {checkLocalToken} from "../actions/authAction";
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
+
+  state = {
+      subject:'',
+      description : ''
+  };
+
+    componentDidMount = () => {
+        this.props.checkLocalToken();
+    };
+
+    static getDerivedStateFromProps(nextProps,previosProps){
+        if(!nextProps.auth.isAuthenticated){
+            nextProps.navigation.navigate('Login')
+        }
+        return null;
+    }
+
+  onSubmit = () => {
+      this.props.sendEmail(this.state);
+      this.setState({subject:''});
+      this.setState({description:''});
+  };
+
   render() {
     return (
       <Container>
@@ -29,38 +56,38 @@ export default class HomeScreen extends React.Component {
             </Button>
           </Left>
           <Body>
-            <Title>HomeScreen</Title>
+            <Title>NepHelp</Title>
           </Body>
           <Right />
         </Header>
         <Content padder>
-          <Card>
-            <CardItem>
-              <Body>
-                <Text>Chat App to talk some awesome people!</Text>
-              </Body>
-            </CardItem>
-          </Card>
-          <Button
-            full
-            rounded
-            dark
-            style={{ marginTop: 10 }}
-            onPress={() => this.props.navigation.navigate("Chat")}
-          >
-            <Text>Chat With People</Text>
-          </Button>
-          <Button
-            full
-            rounded
-            primary
-            style={{ marginTop: 10 }}
-            onPress={() => this.props.navigation.navigate("ProfileScreen")}
-          >
-            <Text>Goto Profiles</Text>
-          </Button>
+            <TextField
+                label='Subject'
+                value={this.state.subject}
+                onChangeText={ (subject) => this.setState({ subject }) }
+            />
+            <TextField
+                label='Description (Please leave your contact details if possible)'
+                value={this.state.description}
+                onChangeText={ (description) => this.setState({ description }) }
+                multiline={true}
+            />
+
+            <Button
+                full
+                rounded
+                style={{ marginTop: 10 }}
+                onPress={() => this.onSubmit()}>
+                <Text>Submit Request</Text>
+            </Button>
         </Content>
       </Container>
     );
   }
 }
+
+const mapDispatchToProps = (state) => ({
+    auth:state.auth
+});
+
+export default connect(mapDispatchToProps,{sendEmail,checkLocalToken})(HomeScreen);

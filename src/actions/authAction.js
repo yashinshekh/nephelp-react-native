@@ -58,3 +58,8 @@ export const logout = () => dispatch => {
         payload:{}
     })
 };
+
+
+export const sendEmail = (userReq) => dispatch => {
+    console.log(userReq);
+};
