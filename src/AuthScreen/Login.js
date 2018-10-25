@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Text,View,TextInput,StyleSheet} from 'react-native';
+import {Text,View,TextInput,StyleSheet,Keyboard} from 'react-native';
 import {Body, Button, Card, CardItem, Container, Content, Header, Icon, Left, Right, Title} from "native-base";
 import {TextField} from 'react-native-material-textfield';
 import {connect} from 'react-redux';
@@ -25,6 +25,7 @@ class Login extends Component{
 
     onSubmit = () => {
         this.props.loginUser(this.state);
+        Keyboard.dismiss();
     };
 
     render() {

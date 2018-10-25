@@ -1,5 +1,5 @@
 import React from "react";
-import { StatusBar } from "react-native";
+import { StatusBar,Keyboard } from "react-native";
 import {
   Button,
   Text,
@@ -18,6 +18,8 @@ import {TextField} from 'react-native-material-textfield';
 import {connect} from 'react-redux';
 import {sendEmail} from "../actions/authAction";
 import {checkLocalToken} from "../actions/authAction";
+import {isEmpty} from "../utils/isEmpty";
+import Toast from 'react-native-simple-toast';
 
 class HomeScreen extends React.Component {
 
@@ -34,6 +36,12 @@ class HomeScreen extends React.Component {
         if(!nextProps.auth.isAuthenticated){
             nextProps.navigation.navigate('Login')
         }
+        if(!isEmpty(nextProps.email)){
+            Toast.show(nextProps.email.emailmessage,Toast.LONG);
+        }
+        if(!isEmpty(nextProps.error)){
+            Toast.show(nextProps.error.message,Toast.LONG);
+        }
         return null;
     }
 
@@ -41,6 +49,7 @@ class HomeScreen extends React.Component {
       this.props.sendEmail(this.state);
       this.setState({subject:''});
       this.setState({description:''});
+      Keyboard.dismiss();
   };
 
   render() {
@@ -87,7 +96,9 @@ class HomeScreen extends React.Component {
 }
 
 const mapDispatchToProps = (state) => ({
-    auth:state.auth
+    auth:state.auth,
+    email:state.email,
+    error:state.error
 });
 
 export default connect(mapDispatchToProps,{sendEmail,checkLocalToken})(HomeScreen);

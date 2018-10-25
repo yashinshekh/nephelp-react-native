@@ -61,5 +61,17 @@ export const logout = () => dispatch => {
 
 
 export const sendEmail = (userReq) => dispatch => {
-    console.log(userReq);
+    axios.post('https://nephelp.herokuapp.com/api/sendemail',userReq)
+        .then(res => {
+            dispatch({
+                type:"EMAIL_NOTIFICATION",
+                payload:res.data
+            })
+        })
+        .catch(err => {
+            dispatch({
+                type:"ERROR_DATA",
+                payload:err.response.data
+            })
+        })
 };
