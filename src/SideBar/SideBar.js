@@ -64,7 +64,7 @@ class SideBar extends React.Component {
             }}
             source={{
               uri:
-                "https://raw.githubusercontent.com/GeekyAnts/NativeBase-KitchenSink/master/assets/logo.png"
+                "https://res.cloudinary.com/ddzzjhehn/image/upload/v1540454023/icon.png"
             }}
           />
           <List
