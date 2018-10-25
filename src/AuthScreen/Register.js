@@ -36,20 +36,20 @@ class Register extends Component{
                         label='Email'
                         value={this.state.email}
                         onChangeText={ (email) => this.setState({ email }) }
-                        error={this.state.errors.email}
+                        error={this.props.errors.email}
                     />
                     <TextField
                         label='Password'
                         value={this.state.password}
                         onChangeText={ (password) => this.setState({ password }) }
-                        error={this.state.errors.password}
+                        error={this.props.errors.password}
                     />
 
                     <TextField
                         label='Confirm Password'
                         value={this.state.password2}
                         onChangeText={ (password2) => this.setState({ password2 }) }
-                        error={this.state.errors.password2}
+                        error={this.props.errors.password2}
                     />
 
                     <Button
