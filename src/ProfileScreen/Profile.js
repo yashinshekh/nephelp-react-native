@@ -20,35 +20,59 @@ import {
 import { StackNavigator } from "react-navigation";
 import EditScreenOne from "./EditScreenOne.js";
 import EditScreenTwo from "./EditScreenTwo.js";
+import {TextField} from 'react-native-material-textfield';
 
 export default class Profile extends React.Component {
-  componentDidMount() {
-    if (this.props.navigation.state.params !== undefined) {
-      Alert.alert("USER found");
-    }
-  }
+
+  state = {
+      firstname:'',
+      lastname:'',
+      dob:'',
+      passportno:'',
+      nationality:'',
+  };
+
+  onSubmit = () => {
+    console.log("Submit");
+  };
+
   render() {
     return (
       <Container>
         <Content padder>
-          <Card>
-            <CardItem>
-              <Icon active name="paper-plane" />
-              <Text>Show User profiles here</Text>
-              <Right>
-                <Icon name="close" />
-              </Right>
-            </CardItem>
-          </Card>
-          <Button
-            full
-            rounded
-            primary
-            style={{ marginTop: 10 }}
-            onPress={() => this.props.navigation.navigate("EditScreenOne")}
-          >
-            <Text>Goto EditScreen One</Text>
-          </Button>
+            <TextField
+                label='First Name'
+                value={this.state.firstname}
+                onChangeText={ (firstname) => this.setState({ firstname }) }
+            />
+            <TextField
+                label='Last Name'
+                value={this.state.lastname}
+                onChangeText={ (lastname) => this.setState({ lastname }) }
+            />
+            <TextField
+                label='Date Of Birth'
+                value={this.state.dob}
+                onChangeText={ (dob) => this.setState({ dob }) }
+            />
+            <TextField
+                label='Passport No'
+                value={this.state.passportno}
+                onChangeText={ (passportno) => this.setState({ passportno }) }
+            />
+            <TextField
+                label='Nationality'
+                value={this.state.nationality}
+                onChangeText={ (nationality) => this.setState({ nationality }) }
+            />
+
+            <Button
+                full
+                rounded
+                style={{ marginTop: 10 }}
+                onPress={() => this.onSubmit()}>
+                <Text>Save</Text>
+            </Button>
         </Content>
       </Container>
     );
